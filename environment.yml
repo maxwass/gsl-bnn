@@ -1,0 +1,38 @@
+name: gsl-bnn-mac-m2
+channels:
+  - conda-forge
+  - apple
+dependencies:
+  - python=3.9
+  - pip>=19.0
+  - tensorflow-deps
+  - matplotlib
+  - seaborn
+  - numpy
+  - scikit-learn # linear regression in predictive checks
+  - jupyter
+  - ipykernel # connecting conda to jupyter
+  - pip:
+    - trash-cli
+    - multiprocess
+    - networkx==2.6.3
+    - plotly
+    - lightning-grid # CLI for grid.ai
+    # tensorflow stuff: https://stackoverflow.com/questions/72964800/what-is-the-proper-way-to-install-tensorflow-on-apple-m1-in-2022
+    #- tensorflow
+    - tensorflow-macos
+    - tensorflow-metal
+    #- tensorflow_probability
+    # jax stuff
+    - jax
+    - jaxlib
+    - flax
+    # pyro stuff
+    - pyro-ppl # probabilistic programming via pyro
+    - graphviz # for visualization of pyro models
+    - numpyro
+    # bayesian posterior plotting
+    - arviz
+    # real data
+    - yfinance
+    - yahoofinancials
