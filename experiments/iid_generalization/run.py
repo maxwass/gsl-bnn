@@ -33,9 +33,6 @@ from src.config import num_samples_to_generate, w_init_scale, lam_init_scale, al
 from config import dpg_hyperparameters, pds_hyperparameters, dpg_mimo_hyperparameters, dpg_mimo_e_hyperparameters, experiment_settings
 from src import NUM_BINS
 
-num_chains, num_warmup_samples, num_samples = 4, 500, 1000 #8, 500, 500 #jax.local_device_count()
-
-
 
 def load_data():
     data_dict = pickle.load(open(experiment_settings['data_path'], "rb"))
@@ -90,13 +87,13 @@ def run_dpg(model_class, params, data):
     rng_key, rng_key_ = jax_random.split(rng_key)
     kernel = NUTS(model_class.model, forward_mode_differentiation=True)
     mcmc = MCMC(kernel,
-                num_warmup=num_warmup_samples, num_samples=num_samples,
+                num_warmup=experiment_settings['num_warmup_samples'], num_samples=experiment_settings['num_posterior_samples'],
                 progress_bar=True,
-                num_chains=num_chains, chain_method='parallel')
+                num_chains=experiment_settings['num_chains'], chain_method='parallel')
     start_time = time.time()
     mcmc.run(rng_key_, **model_args)
     end_time = time.time()
-    print(f"Time taken for inference using {num_chains} with {num_warmup_samples} warmup samples and {num_samples} samples: {end_time - start_time}")
+    print(f"Time taken for inference using {experiment_settings['num_chains']} with {experiment_settings['num_warmup_samples']} warmup samples and {experiment_settings['num_posterior_samples']} samples: {end_time - start_time}")
     mcmc.print_summary()
     print(f"^^********** Finished  **********^^\n\n")
     samples = mcmc.get_samples()
@@ -140,15 +137,14 @@ def run_pds(model_class, params, data):
     rng_key = jax_random.PRNGKey(0)
     rng_key, rng_key_ = jax_random.split(rng_key)
     kernel = NUTS(model_class.model, forward_mode_differentiation=True)
-    #num_chains, num_warmup_samples, num_samples = 8, 500, 250 #jax.local_device_count()
     mcmc = MCMC(kernel,
-                num_warmup=num_warmup_samples, num_samples=num_samples,
+                num_warmup=experiment_settings['num_warmup_samples'], num_samples=experiment_settings['num_posterior_samples'],
                 progress_bar=True,
-                num_chains=num_chains, chain_method='parallel')
+                num_chains=experiment_settings['num_chains'], chain_method='parallel')
     start_time = time.time()
     mcmc.run(rng_key_, **model_args)
     end_time = time.time()
-    print(f"Time taken for inference using {num_chains} with {num_warmup_samples} warmup samples and {num_samples} samples: {end_time - start_time}")
+    print(f"Time taken for inference using {experiment_settings['num_chains']} with {experiment_settings['num_warmup_samples']} warmup samples and {experiment_settings['num_posterior_samples']} samples: {end_time - start_time}")
     mcmc.print_summary()
     print(f"^^********** Finished  **********^^\n\n")
     samples = mcmc.get_samples()
@@ -270,13 +266,13 @@ def run_dpg_mimo_e(model_class, params, data, mimo_base_samples):
     rng_key, rng_key_ = jax_random.split(rng_key)
     kernel = NUTS(model_class.model, forward_mode_differentiation=True)
     mcmc = MCMC(kernel,
-                num_warmup=num_warmup_samples, num_samples=num_samples,
+                num_warmup=experiment_settings['num_warmup_samples'], num_samples=experiment_settings['num_posterior_samples'],
                 progress_bar=True,
-                num_chains=num_chains, chain_method='parallel')
+                num_chains=experiment_settings['num_chains'], chain_method='parallel')
     start_time = time.time()
     mcmc.run(rng_key_, **model_args)
     end_time = time.time()
-    print(f"Time taken for inference using {num_chains} with {num_warmup_samples} warmup samples and {num_samples} samples: {end_time - start_time}")
+    print(f"Time taken for inference using {experiment_settings['num_chains']} with {experiment_settings['num_warmup_samples']} warmup samples and {experiment_settings['num_posterior_samples']} samples: {end_time - start_time}")
     mcmc.print_summary()
     print(f"^^********** Finished  **********^^\n\n")
     samples = mcmc.get_samples() 

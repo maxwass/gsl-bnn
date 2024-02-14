@@ -32,6 +32,7 @@ altered_prior = {'theta_loc': jnp.log(10 ** (-.5)),
                  'b_loc': jnp.log(10 ** 0),
                  'b_scale': jnp.sqrt(2)}
 
+
 # pds prior settings
 pds_prior_settings = {
     'alpha_loc': jnp.log(10**0),

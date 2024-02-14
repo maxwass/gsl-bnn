@@ -5,6 +5,7 @@ PROJECT_ROOT = PROJECT_ROOT[:PROJECT_ROOT.find('gsl-bnn') + len('gsl-bnn')]
 
 RAW_DATA_PATH = PROJECT_ROOT + "/data/raw/"
 SYNTHETIC_DATA_PATH = PROJECT_ROOT + "/data/synthetic/"
+FINANCIAL_DATA_PATH = PROJECT_ROOT + "/data/financial/"
 
 RESULTS_PATH = PROJECT_ROOT + "/results/"
 

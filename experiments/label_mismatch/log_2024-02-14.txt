@@ -1,0 +1,97 @@
+Testing on the following data: dict_keys(['RG_.32', 'RG_.5', 'ER_.5', 'BA_1'])
+Loading RG_.32 data from /Users/maxw/projects/gsl-bnn/data/synthetic/RG_N=20_r=0.32_dim=2.pt
+Loading RG_.5 data from /Users/maxw/projects/gsl-bnn/data/synthetic/RG_N=20_r=0.5_dim=2.pt
+Loading ER_.5 data from /Users/maxw/projects/gsl-bnn/data/synthetic/ER_N=20_p=0.5.pt
+Loading BA_1 data from /Users/maxw/projects/gsl-bnn/data/synthetic/BA_N=20_m=1.pt
+
+
+ ******* Evaluating DPG on... *******
+** RG_.32 **
+Test Error: 0.01573682 \pm 0.01008262
+Test NLL: 10.333 \pm 5.378
+Test BS: 0.01286086 \pm 0.00716473
+Test ECE:0.00341998
+** RG_.5 **
+Test Error: 0.01899993 \pm 0.01078356
+Test NLL: 17.532 \pm 5.946
+Test BS: 0.02287454 \pm 0.00920260
+Test ECE:0.05208334
+** ER_.5 **
+Test Error: 0.00505251 \pm 0.00561556
+Test NLL: 33.009 \pm 5.315
+Test BS: 0.04655694 \pm 0.01235685
+Test ECE:0.17155522
+** BA_1 **
+Test Error: 0.02221048 \pm 0.00634117
+Test NLL: 20.911 \pm 6.205
+Test BS: 0.02103098 \pm 0.00607401
+Test ECE:0.01663103
+
+
+ ******* Evaluating PDS on... *******
+** RG_.32 **
+Test Error: 0.01589471 \pm 0.01025924
+Test NLL: 10.317 \pm 5.391
+Test BS: 0.01285023 \pm 0.00717723
+Test ECE:0.00374968
+** RG_.5 **
+Test Error: 0.01931572 \pm 0.01114136
+Test NLL: 17.704 \pm 5.945
+Test BS: 0.02331776 \pm 0.00944993
+Test ECE:0.05286844
+** ER_.5 **
+Test Error: 0.00557888 \pm 0.00608435
+Test NLL: 33.432 \pm 5.275
+Test BS: 0.04801297 \pm 0.01273474
+Test ECE:0.17353761
+** BA_1 **
+Test Error: 0.02215785 \pm 0.00628479
+Test NLL: 20.802 \pm 6.143
+Test BS: 0.02096917 \pm 0.00604504
+Test ECE:0.01659561
+
+
+ ******* Evaluating DPG-MIMO on... *******
+** RG_.32 **
+Test Error: 0.01415789 \pm 0.00940604
+Test NLL: 9.191 \pm 5.155
+Test BS: 0.01188410 \pm 0.00664590
+Test ECE:0.00350250
+** RG_.5 **
+Test Error: 0.01326311 \pm 0.01149442
+Test NLL: 17.125 \pm 5.178
+Test BS: 0.01737878 \pm 0.00652344
+Test ECE:0.05460664
+** ER_.5 **
+Test Error: 0.01878953 \pm 0.01189182
+Test NLL: 40.487 \pm 5.515
+Test BS: 0.04619085 \pm 0.00956773
+Test ECE:0.16170704
+** BA_1 **
+Test Error: 0.02710527 \pm 0.01173046
+Test NLL: 13.371 \pm 3.028
+Test BS: 0.02060318 \pm 0.00600022
+Test ECE:0.01124196
+
+
+ ******* Evaluating DPG-MIMO-E on... *******
+** RG_.32 **
+Test Error: 0.01289469 \pm 0.00823394
+Test NLL: 8.354 \pm 4.738
+Test BS: 0.01065306 \pm 0.00604091
+Test ECE:0.00240069
+** RG_.5 **
+Test Error: 0.01568413 \pm 0.01414174
+Test NLL: 12.656 \pm 4.646
+Test BS: 0.01516709 \pm 0.00870954
+Test ECE:0.02916749
+** ER_.5 **
+Test Error: 0.11957896 \pm 0.04219780
+Test NLL: 37.770 \pm 5.657
+Test BS: 0.07818024 \pm 0.01967286
+Test ECE:0.02907484
+** BA_1 **
+Test Error: 0.01610523 \pm 0.00739919
+Test NLL: 8.349 \pm 2.919
+Test BS: 0.01318497 \pm 0.00479427
+Test ECE:0.00283587

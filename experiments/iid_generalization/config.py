@@ -4,7 +4,6 @@ from src import SYNTHETIC_DATA_PATH, RESULTS_PATH
 from src.config import altered_prior, pds_prior_settings
 import jax.numpy as jnp
 
-RESULTS_PATH = RESULTS_PATH
 # Hyperparameters
 dpg_hyperparameters = {
     'depth': 200,
@@ -55,6 +54,11 @@ experiment_settings  = {
     'num_signals': float('inf'),
     'num_train_samples': 50,
     'num_test_samples': 100,
+
+    # inference settings
+    'num_chains': 4,
+    'num_warmup_samples': 500, # per chain
+    'num_posterior_samples': 1000, # per chain
 
     # posterior samples / point estimates
     'results_path': RESULTS_PATH + 'iid_generalization/', #new_run/',

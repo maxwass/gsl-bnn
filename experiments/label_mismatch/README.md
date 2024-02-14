@@ -1,0 +1,1 @@
+From the i.i.d. generalization experiment, we have performed parameter inference on 4 models {DPG, PDS, DPG-MIMO (point estimates), and DPG-MIMO-E} using RG_{\frac{1}{3}} data. To test if the models can effectively detect out of distribution data, we use these same models on OTHER graph distributions, namely, RG_{\frac{1}{2}}, ER_{\frac{1}{2}}, ER_{.25}, BA_{1}.
