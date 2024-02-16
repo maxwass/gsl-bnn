@@ -1,0 +1,1 @@
+All modeling, inference, evaluation, and plotting is done in notebooks/financial.ipynb. Posterior samples and data from this procedure are saved in results/financial in samples.pkl and data.pkl, respectively. To recreate plots, simply load them at the end of the notebook. 

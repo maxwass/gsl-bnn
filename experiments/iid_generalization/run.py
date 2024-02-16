@@ -80,7 +80,7 @@ def run_dpg(model_class, params, data):
                 'w_init': w_init_scale * jnp.ones((num_train_samples, num_edges)), 
                 'lam_init': lam_init_scale * jnp.ones((num_train_samples, n)),
                 'S': S,
-                'prior_settings': params['prior']} #altered_prior} # priors for model parameters
+                'prior_settings': params['prior']} #altered_prior
 
     # Start from this source of randomness. We will split keys for subsequent operations.
     rng_key = jax_random.PRNGKey(0)
