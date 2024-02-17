@@ -3,7 +3,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # remove everything after the string 'bayes_gsl', if anything exists
 PROJECT_ROOT = PROJECT_ROOT[:PROJECT_ROOT.find('gsl-bnn') + len('gsl-bnn')]
 
-RAW_DATA_PATH = PROJECT_ROOT + "/data/raw/"
+DATA_PATH = PROJECT_ROOT + "/data/"
 SYNTHETIC_DATA_PATH = PROJECT_ROOT + "/data/synthetic/"
 FINANCIAL_DATA_PATH = PROJECT_ROOT + "/data/financial/"
 

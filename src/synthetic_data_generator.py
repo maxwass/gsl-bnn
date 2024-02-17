@@ -410,133 +410,140 @@ def sample_rg_graphs(r: float, seed: int = 50): # r = 0.32, 0.5
 
     return adjs, filename, graph_params
 
-"""
-
-    Entry point to sample graphs and signals.
-    Uncomment the desired graph distribution to sample from.
-
-"""
-
-#adjacencies, filename, graph_params = sample_ba_graphs()
-#adjacencies, filename, graph_params = sample_er_graphs(num_vertices=20, p=.5)
-adjacencies, filename, graph_params = sample_rg_graphs(r=.32)
-#adjacencies, filename, graph_params = sample_rg_graphs(r=.5)
 
 
-"""
-    Check for the existence of the synthetic data directory, or the existence of the file.
-
-"""
-
-path2file = SYNTHETIC_DATA_PATH + filename
-
-# check if the directory exists and if the file already exists
-if not os.path.isdir(SYNTHETIC_DATA_PATH):
-    print(f"Directory {SYNTHETIC_DATA_PATH} does not exist. Please create it.")
-    raise ValueError(f"Directory {SYNTHETIC_DATA_PATH} does not exist. Please create it.")
-elif os.path.isfile(path2file):
-    raise ValueError(f"Filname {filename} already exists! Manually remove it or change filename.")
-
-
-"""
-
-    Compute laplacians and normalize.
-
-"""
-
-def diag_embed(diags: np.ndarray):
+def main():
     """
-        diags: np.ndarray of shape (batch_size, n)
 
-        returns: np.ndarray of shape (batch_size, n, n) where the diagonal elements are diags
+        Entry point to sample graphs and signals.
+        Uncomment the desired graph distribution to sample from.
+
     """
-    mask = np.eye(diags.shape[-1], dtype=bool)
-    diag = diags[:, :, np.newaxis]
-    return diag * mask[np.newaxis, :, :]
+
+    #adjacencies, filename, graph_params = sample_ba_graphs()
+    #adjacencies, filename, graph_params = sample_er_graphs(num_vertices=20, p=.5)
+    adjacencies, filename, graph_params = sample_rg_graphs(r=.32)
+    #adjacencies, filename, graph_params = sample_rg_graphs(r=.5)
 
 
-num_graphs, num_vertices = adjacencies.shape[0:2]
-
-D = diag_embed(np.sum(adjacencies, axis=1))
-laplacians = D - adjacencies.astype(np.float32)
-# normalize each laplacian slice by its max eigenvalue
-max_eigvals = np.linalg.eigvalsh(laplacians).max(axis=1)
-normalized_laplacians = laplacians / max_eigvals[:, np.newaxis, np.newaxis]
-
-if vizualize:
-    visualize_graphs(adjacencies, num_graphs_viz=3)
-    plot_laplacian_eigenvalues(normalized_laplacians, num_graphs_viz=3)
-    fig, ax = plt.subplots(1, 1)
-    plt.hist(edge_density(adjacencies), bins=50)
-    plt.title("Edge density distribution")
-    plt.show(block=False)
-
-# find the eigenvalues and eigenvectors of the laplacians. Note they are real symmetric matrices.
-eigenvalues, eigenvectors = np.linalg.eigh(normalized_laplacians)
-# we know the smallest eigenvalue is exactly 0, but numerical precision/error makes it ~1e-8
-eigenvalues[:, 0] = 0.0
-
-# apply the pseudo-inverse function to the eigenvalues
-eigenvalues_pinv = np.where(eigenvalues > 1e-6, 1 / eigenvalues, 0.0)
-# compute \sqrt{L^{\dagger}} = V \sqrt{\Lambda^{\dagger}} V^T
-normalized_laplacians_square_root_pinv = eigenvectors @ diag_embed(np.sqrt(eigenvalues_pinv)) @ eigenvectors.transpose(0, 2, 1)
-print(f'Sanity Check: manual same as np.pinv: ', np.allclose(normalized_laplacians_square_root_pinv, normalized_laplacians_square_root_pinv))
-
-# sanity check: compare L^{\dagger} with pinv function is the same as \sqrt{L^{\dagger}} * \sqrt{L^{\dagger}}
-normalized_laplacians_pinv = normalized_laplacians_square_root_pinv @ normalized_laplacians_square_root_pinv
-reconstruction_error = ((normalized_laplacians_pinv - np.linalg.pinv(normalized_laplacians))**2).sum(axis=(-1, -2))
-print("Maximum reconstruction error between L^-0.5 @ L^-0.5 and pinv(L): {:.6f}".format(reconstruction_error.max().item()))
-
-# now apply filter to (non-smooth) signals: x = \sqrt(L^{\dagger}} x_0
-np.random.seed(seed)
-num_signals = signal_subsets[-1]
-x_0_all = np.random.normal(size=(num_graphs, num_vertices, num_signals))
-
-expected_e = expected_euclidean_distance(normalized_laplacians_pinv)
-euclidean_distance_dict = {'expected': expected_e}
-
-print(f"Generating datasets with {signal_subsets} signals...")
-for p in signal_subsets:
-    r"""
-        Create a dataset for each number of sampled signals.
     """
-    print(f"\t{p} signals")
-    # only use the first p signals
-    x_0 = x_0_all[:, :, :p]
-    smooth_signals = normalized_laplacians_square_root_pinv @ x_0
+        Check for the existence of the synthetic data directory, or the existence of the file.
 
-    e_hat = euclidean_distance(smooth_signals)
-    euclidean_distance_dict[str(p)] = e_hat
     """
+    
+    path2file = SYNTHETIC_DATA_PATH + filename
+
+    # check if the directory exists and if the file already exists
+    if not os.path.isdir(SYNTHETIC_DATA_PATH):
+        print(f"Directory {SYNTHETIC_DATA_PATH} does not exist. Please create it.")
+        raise ValueError(f"Directory {SYNTHETIC_DATA_PATH} does not exist. Please create it.")
+    elif os.path.isfile(path2file):
+        raise ValueError(f"Filname {filename} already exists! Manually remove it or change filename.")
+
+
+    """
+
+        Compute laplacians and normalize.
+
+    """
+
+    def diag_embed(diags: np.ndarray):
+        """
+            diags: np.ndarray of shape (batch_size, n)
+
+            returns: np.ndarray of shape (batch_size, n, n) where the diagonal elements are diags
+        """
+        mask = np.eye(diags.shape[-1], dtype=bool)
+        diag = diags[:, :, np.newaxis]
+        return diag * mask[np.newaxis, :, :]
+
+
+    num_graphs, num_vertices = adjacencies.shape[0:2]
+
+    D = diag_embed(np.sum(adjacencies, axis=1))
+    laplacians = D - adjacencies.astype(np.float32)
+    # normalize each laplacian slice by its max eigenvalue
+    max_eigvals = np.linalg.eigvalsh(laplacians).max(axis=1)
+    normalized_laplacians = laplacians / max_eigvals[:, np.newaxis, np.newaxis]
+
     if vizualize:
-        plot_signal_energy_distribution(x=smooth_signals, eigenvectors=eigenvectors, eigenvalues=eigenvalues,
-                                        num_signals_to_plot=10 if p>10 else p)
-        euclidean_distance_plot(e=e_hat, expected_e=expected_e, adjs=adjacencies, num_signals=p)
+        visualize_graphs(adjacencies, num_graphs_viz=3)
+        plot_laplacian_eigenvalues(normalized_laplacians, num_graphs_viz=3)
+        fig, ax = plt.subplots(1, 1)
+        plt.hist(edge_density(adjacencies), bins=50)
+        plt.title("Edge density distribution")
+        plt.show(block=False)
+
+    # find the eigenvalues and eigenvectors of the laplacians. Note they are real symmetric matrices.
+    eigenvalues, eigenvectors = np.linalg.eigh(normalized_laplacians)
+    # we know the smallest eigenvalue is exactly 0, but numerical precision/error makes it ~1e-8
+    eigenvalues[:, 0] = 0.0
+
+    # apply the pseudo-inverse function to the eigenvalues
+    eigenvalues_pinv = np.where(eigenvalues > 1e-6, 1 / eigenvalues, 0.0)
+    # compute \sqrt{L^{\dagger}} = V \sqrt{\Lambda^{\dagger}} V^T
+    normalized_laplacians_square_root_pinv = eigenvectors @ diag_embed(np.sqrt(eigenvalues_pinv)) @ eigenvectors.transpose(0, 2, 1)
+    print(f'Sanity Check: manual same as np.pinv: ', np.allclose(normalized_laplacians_square_root_pinv, normalized_laplacians_square_root_pinv))
+
+    # sanity check: compare L^{\dagger} with pinv function is the same as \sqrt{L^{\dagger}} * \sqrt{L^{\dagger}}
+    normalized_laplacians_pinv = normalized_laplacians_square_root_pinv @ normalized_laplacians_square_root_pinv
+    reconstruction_error = ((normalized_laplacians_pinv - np.linalg.pinv(normalized_laplacians))**2).sum(axis=(-1, -2))
+    print("Maximum reconstruction error between L^-0.5 @ L^-0.5 and pinv(L): {:.6f}".format(reconstruction_error.max().item()))
+
+    # now apply filter to (non-smooth) signals: x = \sqrt(L^{\dagger}} x_0
+    np.random.seed(seed)
+    num_signals = signal_subsets[-1]
+    x_0_all = np.random.normal(size=(num_graphs, num_vertices, num_signals))
+
+    expected_e = expected_euclidean_distance(normalized_laplacians_pinv)
+    euclidean_distance_dict = {'expected': expected_e}
+
+    print(f"Generating datasets with {signal_subsets} signals...")
+    for p in signal_subsets:
+        r"""
+            Create a dataset for each number of sampled signals.
+        """
+        print(f"\t{p} signals")
+        # only use the first p signals
+        x_0 = x_0_all[:, :, :p]
+        smooth_signals = normalized_laplacians_square_root_pinv @ x_0
+
+        e_hat = euclidean_distance(smooth_signals)
+        euclidean_distance_dict[str(p)] = e_hat
+        """
+        if vizualize:
+            plot_signal_energy_distribution(x=smooth_signals, eigenvectors=eigenvectors, eigenvalues=eigenvalues,
+                                            num_signals_to_plot=10 if p>10 else p)
+            euclidean_distance_plot(e=e_hat, expected_e=expected_e, adjs=adjacencies, num_signals=p)
+        """
+
+    if vizualize:
+        euclidean_distance_matrix_convergence(signal_subsets=signal_subsets,
+                                            euclidean_distance_dict=euclidean_distance_dict)
+        viz_euclidean_distance_matrix_convergence(signal_subsets=[3, 10, 100, 1000, 10000],
+                                                euclidean_distance_dict=euclidean_distance_dict,
+                                                adjacencies=adjacencies, idx=0)
+
+
+    """
+        Save a dictionary consisting of the sampled graphs, the graph parameters, and the euclidean distance matrices.
+    """
+    data = {'adjacencies': adjacencies, **euclidean_distance_dict, 'graph_params': graph_params}
+
+    """
+        Save the data to file
     """
 
-if vizualize:
-    euclidean_distance_matrix_convergence(signal_subsets=signal_subsets,
-                                          euclidean_distance_dict=euclidean_distance_dict)
-    viz_euclidean_distance_matrix_convergence(signal_subsets=[3, 10, 100, 1000, 10000],
-                                              euclidean_distance_dict=euclidean_distance_dict,
-                                              adjacencies=adjacencies, idx=0)
+    print(f"Attemping to save data to {path2file}")
+    with open(path2file, 'wb') as f:
+        pickle.dump(data, f)
+    print(f"Saved data to {path2file}")
+    # Load the dictionary from the file to ensure saved correctly
+    with open(path2file, 'rb') as f:
+        loaded_data = pickle.load(f)
 
 
-"""
-    Save a dictionary consisting of the sampled graphs, the graph parameters, and the euclidean distance matrices.
-"""
-data = {'adjacencies': adjacencies, **euclidean_distance_dict, 'graph_params': graph_params}
 
-"""
-    Save the data to file
-"""
-
-print(f"Attemping to save data to {path2file}")
-with open(path2file, 'wb') as f:
-    pickle.dump(data, f)
-print(f"Saved data to {path2file}")
-# Load the dictionary from the file to ensure saved correctly
-with open(path2file, 'rb') as f:
-    loaded_data = pickle.load(f)
-
-
+# add a main
+if __name__ == "__main__":
+    main()
