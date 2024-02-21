@@ -13,8 +13,9 @@ Visualizing Steps in the Bayesian Workflow: Predictive Checking
 ![Predictive Checking](/figures/predictive_check.png)
 
 
-Authors
+## Authors
 - [TO BE FILLED IN](mailto: myemail@gmail.com)
 
-Setup
+## Setup
 - [Setting Up the Project Environment](docs/setup.md)
+- Each experiment has its own directory in `experiments/` with a `README.md` file that describes how to run the experiment and a corresponding directory in `results/` to store the results (e.g. posterior parameters, cached data for faster reproducability, etc).
