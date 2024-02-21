@@ -2,28 +2,33 @@
 
 Repository containing code for the paper ["Graph Structure Learning with Interpretable Bayesian Neural Networks"](http://link-to-your-paper.com)
 
-DPG: The Graph Structure Learning neural network with independently interpretable parameters.
-<div align="center">
-  
-  ![The GSL neural network diagram](/figures/layer_and_unrolling.png)
 
-</div>
-
-Bayesian Modeling Workflow.
+<br>
 
 <div align="center">
-  
-  ![Bayesian workflow diagram](/figures/bayes_dpg_workflow.png)
-
+  <img src="figures/layer_and_unrolling.png" alt="The GSL neural network diagram">
+  <br>
+  <em>DPG: The Graph Structure Learning neural network with independently interpretable parameters.</em>
 </div>
 
-Visualizing Steps in the Bayesian Workflow: Predictive Checking.
+<br><br>
 
 <div align="center">
-  
-  ![Predictive checking diagram](/figures/predictive_check.png)
-
+  <img src="figures/bayes_dpg_workflow.png" alt="Bayesian workflow diagram">
+  <br>
+  <em>Bayesian Modeling Workflow.</em>
 </div>
+
+<br><br>
+
+<div align="center">
+  <img src="figures/predictive_check.png" alt="Predictive checking diagram">
+  <br>
+  <em>Visualizing Steps in the Bayesian Workflow: Predictive Checking.</em>
+</div>
+
+<br>
+
 
 ## Authors
 
@@ -32,11 +37,4 @@ Visualizing Steps in the Bayesian Workflow: Predictive Checking.
 
 ## Setup
 
-Refer to [Setting Up the Project Environment](docs/setup.md) for instructions on how to configure your local environment to run experiments.
-
-### Directory Structure
-
-- `experiments/`: Each experiment has its own directory here.
-  - Contains a `README.md` file with execution details.
-- `results/`: Corresponding results for each experiment are stored here.
-  - This may include posterior parameters, cached data for faster reproducibility, etc.
+Refer to [Setting Up the Project Environment](docs/setup.md) for instructions on how to configure your local environment to run
