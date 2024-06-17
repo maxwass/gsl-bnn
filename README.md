@@ -6,7 +6,7 @@ Repository containing code for the paper ["Graph Structure Learning with Interpr
 <br>
 
 <div align="center">
-  <img src="figures/layer_and_unrolling.png" alt="The GSL neural network diagram">
+  <img src="figures/layer_and_unrolling.png" alt="The GSL neural network diagram", width="400">
   <br>
   <em>DPG: The Graph Structure Learning neural network with independently interpretable parameters.</em>
 </div>
@@ -14,7 +14,7 @@ Repository containing code for the paper ["Graph Structure Learning with Interpr
 <br><br>
 
 <div align="center">
-  <img src="figures/bayes_dpg_workflow.png" alt="Bayesian workflow diagram">
+  <img src="figures/bayes_dpg_workflow.png" alt="Bayesian workflow diagram", width="700">
   <br>
   <em>Bayesian Modeling Workflow.</em>
 </div>
@@ -22,12 +22,23 @@ Repository containing code for the paper ["Graph Structure Learning with Interpr
 <br><br>
 
 <div align="center">
-  <img src="figures/predictive_check.png" alt="Predictive checking diagram">
+  <img src="figures/predictive_check_histogram.png" alt="Predictive checking diagram", width="300">
   <br>
-  <em>Visualizing Steps in the Bayesian Workflow: Predictive Checking.</em>
+  <em>Prior and Posterior Predictive Checking.</em>
 </div>
 
 <br>
+
+<div align="center">
+  <img src="figures/synthetic_label_predMean_predStdv.png" alt="Predictive checking diagram">
+  <br>
+  <em>Subjective Evaluation on Synthetic Data.</em>
+</div>
+
+<br>
+
+
+For a gentle introduction to performing Bayesian inference on synthetics with DPG, see the [notebook](notebooks/simple_dpg_example.ipynb).
 
 
 ## Authors

@@ -2,7 +2,7 @@ name: gsl-bnn-mac-m2
 channels:
   - conda-forge
   - apple
-dependencies:
+dependencies: # original list
   - python=3.9
   - pip>=19.0
   - tensorflow-deps
