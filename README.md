@@ -38,8 +38,7 @@ Repository containing code for the paper ["Graph Structure Learning with Interpr
 <br>
 
 
-For a gentle introduction to performing Bayesian inference on synthetics with DPG, see the [notebook](notebooks/simple_dpg_example.ipynb).
-
+For a gentle introduction to performing Bayesian inference on synthetics with DPG, see the [notebook](notebooks/simple_dpg_example.ipynb). You may first need to create the synthetic data; refer to the synthetics [README](data/synthetic/README.md) and the data [generating file](src/synthetic_data_generator.py).
 
 ## Authors
 
