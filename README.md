@@ -1,6 +1,6 @@
 # Graph Structure Learning with Interpretable Bayesian Neural Networks
 
-Repository containing code for the paper ["Graph Structure Learning with Interpretable Bayesian Neural Networks"](http://link-to-your-paper.com)
+Repository containing code for the paper ["Graph Structure Learning with Interpretable Bayesian Neural Networks"](https://arxiv.org/abs/2406.14786)
 
 
 <br>
@@ -42,8 +42,7 @@ For a gentle introduction to performing Bayesian inference on synthetics with DP
 
 ## Authors
 
-- [Author Name](mailto:myemail@gmail.com) - for initial contributions
-- Additional authors or contributors as they are added
+- [Max Wasserman](mailto:maxw14k@gmail.com)
 
 ## Setup
 
